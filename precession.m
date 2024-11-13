@@ -80,15 +80,17 @@ M_eq = [0; 0; 1];           % Equilibrium Magnetization.
 scale = 1;
 T1 = 2;                     % T1 relaxation (s).
 T2 = 1;                     % T2 relaxation (2).
-viewRotatingFrame = true;   % View precession in rotating reference frame
-relaxationOn = false;        % Enable T1/T2 Relaxation?
+viewRotatingFrame = false;  % View precession in rotating reference frame
+relaxationOn = false;       % Enable T1/T2 Relaxation?
+viewElevation = 30;         % Elevation to view spins (degrees): view(~, viewElevation)
+traceSpinTip = false;       % Enable tracing of tip of magnetization vector.
 
 % B1 parameters: B1(t) = B1cos(wt)i - B1sin(wt)j (left handed rotation)
-magB1x = 1;                  % Magnitude of B1 x component
-magB1y = 0;                  % Magnitude of B1 y component
-magB1z = 0;                  % Magnitude of B1 z component
-w1 = w;                      % Frequency of B1 pulse
-B1phase = pi/2;              % Phase of B1 (radians)
+magB1x = 0.5;               % Magnitude of B1 x component
+magB1y = 0.5;               % Magnitude of B1 y component
+magB1z = 0;                 % Magnitude of B1 z component
+w1 = w;                     % Frequency of B1 pulse
+B1phase = pi/2;             % Phase of B1 (radians)
 B1phase_degrees = B1phase * (180/pi);
 B1x = @(t) magB1x*cos(w1*t + B1phase); % x component of B1
 B1y = @(t) magB1y*sin(w1*t + B1phase); % y component of B1
@@ -122,9 +124,10 @@ legend();
 
 
 % 3D Plot and appearance.
-figure('Renderer', 'painters', 'Position', [10 10 1000 1000])
+f = figure(2);
+f.Position = [10 10 1000 1000];
+%figure('Renderer', 'painters', 'Position', [10 10 1000 1000])
 spinColors = [1 0 0]; 
-showspins(M(:,1),scale,M_initial,spinColors);
 set(gcf, 'Color', 'black');
 set(gca, 'XLim', [-2 2], ...                     % New Axes Limits
          'YLim', [-2 2], ...
@@ -133,37 +136,45 @@ set(gca,'Color', 'black', ...
         'XColor', 'black', ...
         'YColor', 'black', ...
         'ZColor', 'black')
+line(2*xlim, [0,0], [0,0], 'LineWidth', 3, 'Color', 'w');
+line([0,0], 2*ylim, [0,0], 'LineWidth', 3, 'Color', 'w');
+line([0,0], [0,0], 2*zlim, 'LineWidth', 3, 'Color', 'w');
 view(3)
 grid on
 box on 
 axis vis3d % Disable "stretch-to-fill" as view moves
 
+if traceSpinTip
+    spinTip = animatedline('linewidth', 2, 'Color', 'b');      % Animated Line tracing spin vector tip.
+end
 
 % 3D Animation precession
 if viewRotatingFrame
     if magB1x + magB1y ~= 0 % If we have a B1 field, align view along B1 axis
         initialView = B1phase_degrees - 90;
-        view(initialView, 30);
+        view(initialView, viewElevation);
     else
         viewDirection = zrot(-90)*M_initial; % View plane perpendicular to M_initial.
         viewDirection = viewDirection(1:2);
         initialView = acosd(dot(viewDirection,M_initial(1:2))/(norm(viewDirection)*norm(M_initial(1:2))));
-        view(initialView,30)
+        view(initialView,viewElevation)
     end
 end
 
-for i=2:length(t)
-    cla
-    M_i = M(:,i);
-    showspins(M_i,scale,M_origin, spinColors);
+spin = showspins(M(:,1),scale,M_initial,spinColors);
+for i=1:length(t)
+    figure(f)
+    delete(spin)
+    spin = showspins(M(:,i), scale, M_origin, spinColors);
     if viewRotatingFrame
-        view(initialView, 20)
+        view(initialView, viewElevation)
         initialView = initialView - f*(360/frameRate); % Rotate the view along with the rate of precession!
     end
-    % Plot axis lines
-    line(2*xlim, [0,0], [0,0], 'LineWidth', 3, 'Color', 'b');
-    line([0,0], 2*ylim, [0,0], 'LineWidth', 3, 'Color', 'b');
-    line([0,0], [0,0], 2*zlim, 'LineWidth', 3, 'Color', 'b');
-    pause(0.001);
-    fprintf('time = %fs \n', t(i))
+      
+    if traceSpinTip
+        addpoints(spinTip, M(1,i), M(2,i), M(3,i));
+    end
+
+    pause(0.01);
+    fprintf('time = %fs \n', i)
 end
