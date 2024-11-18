@@ -6,22 +6,22 @@ The primary file is ```precession.m``` which contains the user controlled simula
 # Examples
 
 ### Free Precession, no relaxation, viewed in laboratory (non-rotating) reference frame.
-https://github.com/user-attachments/assets/76b4726d-9115-4f31-8a42-5d03655e25ce
+https://github.com/user-attachments/assets/a839607b-cd58-42c9-923c-1dfd77fbe553
 
 ### Free Precession, no relaxation, viewed in rotating reference frame.
-https://github.com/user-attachments/assets/87728cba-6b5a-4364-b30c-95fc62755c2e
+https://github.com/user-attachments/assets/9efabe22-052f-4dd2-bb38-708cc329a4f7
 
 ### Free Precession, with relaxation, laboratory frame
-https://github.com/user-attachments/assets/7d96023f-b39e-43db-ab28-b3e0531f5181
+https://github.com/user-attachments/assets/8807b76e-a9e2-4fda-ae8d-a3e8c8a0f3af
 
 ### Free Precession, with relaxation, rotating frame
-https://github.com/user-attachments/assets/dda76ad1-7a4c-4bf3-b8ef-adc39fe48730
+https://github.com/user-attachments/assets/3b4f048d-bd7f-4f31-9b7d-1c4b510fac84
 
 ### Forced Precession (applied $\vec{B_1}$), no relaxation, laboratory frame
-https://github.com/user-attachments/assets/bb9734ce-e661-40d8-81f9-b6994bd435da
+https://github.com/user-attachments/assets/01184d66-f574-4a84-a72a-3608839ca9ec
 
 ### Forced Precession, no relaxation, rotating frame
-https://github.com/user-attachments/assets/28111938-e27d-4447-a5f5-19af3ecae4c1
+https://github.com/user-attachments/assets/48d8e88e-42a5-4262-b9fa-e1786f7ae7e7
 
 ### Magnetization components ($x,y,z$) versus time, four $\frac{\pi}{2}$ pulses
 ![](Examples/Example-component-plot.png)
