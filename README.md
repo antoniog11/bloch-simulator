@@ -36,9 +36,6 @@ User's can control parameters such as:
 - Whether to trace the tip of the magnetization vector as it moves in 3D space.
 - And more!
 
-# Dependencies
-- [arrow3d](https://www.mathworks.com/matlabcentral/fileexchange/71994-arrow-3d) on Matlab File exchange to draw the spin vector in 3D space.
-
 # References
-This code also makes use of some some code (```showspins.m```) from the [RAD229](https://web.stanford.edu/class/rad229/index.html) course at Stanford taught by Brian Hargreaves and Daniel Ennis.
+This code also makes use of some some code (```showspins.m```) from the [RAD229](https://web.stanford.edu/class/rad229/index.html) course at Stanford taught by Brian Hargreaves and Daniel Ennis as well as a slightly modified version of the arrow.m file from the [Arrow 3d](https://www.mathworks.com/matlabcentral/fileexchange/71994-arrow-3d) library on the Matlab File exchange.
 
